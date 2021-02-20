@@ -1,0 +1,99 @@
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Century Gothic", Arial;
+}
+
+.home_city_details_container th{
+    border-bottom: 2px solid black;
+}
+
+.home_city_details_container tr, .home_city_details_container td {
+    border-bottom: 1px solid black;
+    font-size: 95%;
+}
+
+.input_field {
+    border: 1px solid gray;
+    background-color: white;
+    padding: 5%;
+}
+
+.input_submit {
+    border: 0px solid gray;
+    border-radius: 5%;
+    background-color: #cdcdcd;
+    padding: 5%;
+    transition: .25s;
+    width: 50%;
+}
+
+.input_submit:hover {
+    border: 0px solid gray;
+    border-radius: 5%;
+    background-color: #444444;
+    color: white;
+    padding: 5%;
+    transition: .25s
+}
+
+.password_forgotten {
+    color: black;
+    transition: .25s
+}
+
+.password_forgotten:hover {
+    color: var(--link);
+    transition: .25s
+}
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+
+    #topbar {
+        margin: auto;
+        background-color: var(--main_dark);
+    }
+
+    .topbar_container {
+        display: inline-block;
+        background-color: var(--main_dark);
+        padding: 5%;
+        transition: .25s;
+    }
+
+    .topbar_container:hover {
+        display: inline-block;
+        background-color: var(--main_gray);
+        padding: 5%;
+        transition: .25s;
+    }
+
+    #topbar a {
+        text-decoration: none;
+        color: white;
+        margin: 0px;
+    }
+
+    .home_city_details_container {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
+    }
+
+    .login_form_wrapper {
+        margin: auto;
+        width: 90%;
+    }
+
+    .login_form {
+
+    }
+
+}
+
