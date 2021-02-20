@@ -16,7 +16,6 @@
     <a href="management.php"><div class="topbar_container">MANAGEMENT</div></a>
     <a href="login.php"><div class="topbar_container">LOGIN</div></a>
 </div>
-
 <div id="wrapper">
 
     <div class="home_city_details_container">
