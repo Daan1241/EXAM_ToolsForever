@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6d09bcc9-4294-4048-a257-60a78f6f05d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies/php/loginhandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/loginhandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies/php/pdo.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/pdo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forevertools.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +42,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Coding\School\examen\beroepsexamen\breoepsexamen_project\dependencies\php" />
       <recent name="D:\Coding\School\examen\beroepsexamen\breoepsexamen_project" />
       <recent name="D:\Coding\School\examen\beroepsexamen\breoepsexamen_project\dependencies\css" />
     </key>
@@ -52,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1613839869551</updated>
-      <workItem from="1613839870600" duration="10801000" />
+      <workItem from="1613839870600" duration="16693000" />
     </task>
     <servers />
   </component>

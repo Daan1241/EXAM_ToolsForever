@@ -18,7 +18,13 @@ if ($result == null) {
 } else {
     if($result[0]['password'] == $sanitized['password']){
         echo "inloggen gelukt! Gebruiker ".$result[0]['username']." met wachtwoord ".$result[0]['password'];
-        $_SESSION['sessionId'] = sha1($result[0]['password'].$salt);
+        $_SESSION['sessionID'] = sha1($result[0]['password'].$salt);
+        $_SESSION['username'] = $result[0]['username'];
+
+        $sql = "UPDATE users SET sessionID=? WHERE username=?";
+        $run = $connection->prepare($sql);
+        $run->execute([sha1($result[0]['password'].$salt), $sanitized['username']]);
+        header("Location: ../../index.php");
     } else {
         echo "Gebruiker gevonden, fout wachtwoord";
     }
