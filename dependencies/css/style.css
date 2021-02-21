@@ -248,11 +248,22 @@ a:hover {
         display: inline-block;
         vertical-align: top;
         background-color: #efefef;
-        border: 1px solid gray;
         padding: 1%;
         float: right;
         width: 25%;
         margin-top: 3%;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .home_banner {
+        vertical-align: top;
+        margin: auto;
+        margin-top: 3%;
+        width: 90%;
+        padding: 1%;
+
     }
 
     .home_personal_details {

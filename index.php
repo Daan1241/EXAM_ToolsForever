@@ -57,9 +57,13 @@ if (!isset($_SESSION)) { // Session not yet started.
 
 <div id="wrapper">
     <div id="page_content">
-        <div class="home_personal_details">
+        <div class="home_banner">
+            <img src="dependencies/img/banner.jpg" style="width: 100%">
+        </div>
+
             <?php
             if ($loggedIn == true) {
+                echo "<div class=\"home_personal_details\">";
                 echo "<b style='font-size: 150%;'>Welcome " . $_SESSION['username'] . "</b><br>";
 
                 $sql = "SELECT DISTINCT * FROM users WHERE username=? AND sessionID=?";
@@ -72,9 +76,10 @@ if (!isset($_SESSION)) { // Session not yet started.
                 echo "<tr><td><b>Privileges:</b></td><td>" . $database_result[0]['privileges'] . "</td></tr>";
                 echo "<tr><td><b>User ID:</b></td><td>" . $database_result[0]['UUID'] . "</td></tr>";
                 echo "</table>";
+                echo "</div>";
             }
             ?>
-        </div>
+
 
         <div class="home_city_details_container">
             <b style="font-size: 200%;">Almere</b>
@@ -125,9 +130,40 @@ if (!isset($_SESSION)) { // Session not yet started.
         </div>
     </div>
     <div id="side_menu">
-        <b style='font-size: 150%;'>Beheer</b><br>
-        <ul style="list-style: square;">
-            <li><a class="side_menu_quicklink" href="management.php?action=print">Print voorraad</a></li>
+        <b style='font-size: 150%;'>Beheer (<font color="red">!</font>)</b><br>
+
+        <ul style="list-style: ;">
+            - <b>Voorraad</b>
+            <ul style="list-style: square;">
+                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk voorraad</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Print voorraad</a></li>
+            </ul>
+            <br>
+
+            - <b>Locaties</b>
+            <ul style="list-style: square;">
+                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk locaties</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg locatie toe</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk locatie</a></li>
+            </ul>
+            <br>
+
+            - <b>Producten</b>
+            <ul style="list-style: square;">
+                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk producten</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg producten toe</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk producten</a></li>
+            </ul>
+            <br>
+
+            - <b>Medewerkers</b>
+            <ul style="list-style: square;">
+                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk medewerkers</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg medewerker toe</a></li>
+                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk medewerker info</a></li>
+            </ul>
+            <br>
+
         </ul>
 
     </div>

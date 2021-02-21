@@ -1,5 +1,5 @@
 git add *
 git reset dependencies/php/pdo.php
-git commit -m "improved responsiveness of page, partially added database"
+git commit -m "improved responsiveness of page, partially added database, added side menu on home page"
 git push -u https://github.com/Daan1241/EXAM_ToolsForever.git
 pause
