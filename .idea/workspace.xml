@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6d09bcc9-4294-4048-a257-60a78f6f05d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies/css/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/css/variables.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies/php/loginhandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/loginhandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies/php/pdo.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/pdo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forevertools.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -56,6 +59,9 @@
       <option name="presentableId" value="Default" />
       <updated>1613839869551</updated>
       <workItem from="1613839870600" duration="16693000" />
+      <workItem from="1613896787315" duration="1653000" />
+      <workItem from="1613917079853" duration="1943000" />
+      <workItem from="1613933322493" duration="6302000" />
     </task>
     <servers />
   </component>

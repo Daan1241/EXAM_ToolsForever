@@ -1,11 +1,29 @@
-
 html, body {
     margin: 0px;
     padding: 0px;
     font-family: "Century Gothic", Arial;
 }
 
-.home_city_details_container th{
+#topbar a {
+    text-decoration: none;
+    color: white;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--link);
+    margin: 0px;
+}
+
+a:hover {
+    color: var(--link_hover);
+}
+
+
+
+/* home page */
+.home_city_details_container th {
     border-bottom: 2px solid black;
 }
 
@@ -14,6 +32,10 @@ html, body {
     font-size: 95%;
 }
 
+/* home page */
+
+
+/*login page*/
 .input_field {
     border: 1px solid gray;
     background-color: white;
@@ -38,6 +60,10 @@ html, body {
     transition: .25s
 }
 
+#password_fail {
+    color: red;
+}
+
 .password_forgotten {
     color: black;
     transition: .25s
@@ -48,12 +74,34 @@ html, body {
     transition: .25s
 }
 
+.login_form_wrapper {
+    margin: auto;
+    width: 90%;
+}
+
+/*login page*/
+
 /* Mobile */
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 0px) {
+
+    body {
+        background-color: gray;
+    }
 
     #topbar {
         margin: auto;
         background-color: var(--main_dark);
+    }
+
+    #topbar_mobile {
+        display: inline-block;
+        padding: 5%;
+        transition: .125s;
+    }
+
+    #topbar_others {
+        display: none;
+
     }
 
     .topbar_container {
@@ -70,10 +118,70 @@ html, body {
         transition: .25s;
     }
 
-    #topbar a {
-        text-decoration: none;
-        color: white;
-        margin: 0px;
+
+    .home_personal_details {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
+    }
+
+    .home_city_details_container {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
+    }
+
+
+}
+
+/* Tablet */
+@media only screen and (min-width: 700px) {
+    body {
+        background-color: #232323;
+    }
+
+    #topbar {
+        margin: auto;
+        background-color: var(--main_dark);
+    }
+
+    #topbar_mobile {
+        display: none;
+    }
+
+    #topbar_others {
+        display: inline;
+    }
+
+    .topbar_container {
+        display: inline-block;
+        background-color: var(--main_dark);
+        padding: 3%;
+    }
+
+    .topbar_container:hover {
+        display: inline-block;
+        background-color: var(--main_gray);
+        padding: 3%;
+        transition: .25s;
+    }
+
+    .home_personal_details {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
     }
 
     .home_city_details_container {
@@ -97,3 +205,83 @@ html, body {
 
 }
 
+/*desktop*/
+@media only screen and (min-width: 1100px) {
+
+    body {
+        background-color: white;
+    }
+
+    #topbar {
+        margin: auto;
+        background-color: var(--main_dark);
+    }
+
+    #topbar_mobile {
+        display: none;
+    }
+
+    #topbar_others {
+        display: inline;
+    }
+
+    .topbar_container {
+        display: inline-block;
+        background-color: var(--main_dark);
+        padding: 1.5%;
+    }
+
+    .topbar_container:hover {
+        display: inline-block;
+        background-color: var(--main_gray);
+        padding: 1.5%;
+        transition: .25s;
+    }
+
+    #page_content {
+        display: inline-block;
+        vertical-align: top;
+        width: 70%;
+    }
+
+    #side_menu {
+        display: inline-block;
+        vertical-align: top;
+        background-color: #efefef;
+        border: 1px solid gray;
+        padding: 1%;
+        float: right;
+        width: 25%;
+        margin-top: 3%;
+    }
+
+    .home_personal_details {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
+    }
+
+    .home_city_details_container {
+        margin: auto;
+        margin-top: 5%;
+        width: 90%;
+        background-color: #efefef;
+        border: 5px solid transparent;
+        box-shadow: black 2px 2px;
+
+    }
+
+    .login_form_wrapper {
+        margin: auto;
+        width: 90%;
+    }
+
+    .login_form {
+
+    }
+
+}

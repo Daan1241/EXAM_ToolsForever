@@ -14,7 +14,7 @@ $run->execute([$sanitized['username']]);
 $result = $run->fetchAll();
 
 if ($result == null) {
-    echo "Geen gebruiker gevonden";
+    header("Location: ../../login.php?login=fail");
 } else {
     if($result[0]['password'] == $sanitized['password']){
         echo "inloggen gelukt! Gebruiker ".$result[0]['username']." met wachtwoord ".$result[0]['password'];
@@ -26,7 +26,7 @@ if ($result == null) {
         $run->execute([sha1($result[0]['password'].$salt), $sanitized['username']]);
         header("Location: ../../index.php");
     } else {
-        echo "Gebruiker gevonden, fout wachtwoord";
+        header("Location: ../../login.php?login=fail");
     }
 }
 ?>
