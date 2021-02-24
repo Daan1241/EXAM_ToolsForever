@@ -12,11 +12,14 @@ if (!isset($_SESSION)) { // Session not yet started.
         if (checkLogin($_SESSION['username'], $_SESSION['sessionID']) == "true") {
             $loggedIn = true;
             $sanitized = $_SESSION;
+
+            $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
         }
     } else {
         $loggedIn = false;
     }
 }
+
 ?>
 
 <html>
@@ -38,10 +41,10 @@ if (!isset($_SESSION)) { // Session not yet started.
 
     <div id="topbar_others">
         <a href="index.php">
-            <div class="topbar_container"><b>HOME</b></div>
+            <div class="topbar_container">HOME</div>
         </a>
         <a href="management.php">
-            <div class="topbar_container">MANAGEMENT</div>
+            <div class="topbar_container"><b>MANAGEMENT</b></div>
         </a>
         <?php
         if (isset($sanitized)) {
@@ -72,30 +75,51 @@ if (!isset($_SESSION)) { // Session not yet started.
 
 <div id="wrapper">
     <br>
-    <div class="login_form_wrapper">
-        <b style="font-size: 200%;">Log-in</b>
-        <form method="POST" action="dependencies/php/loginhandler.php" class="login_form">
+    <div id="management_container">
+        <table>
+            <tr>
+                <td><b>Locatie:</b></td>
+                <td><b>Product:</b></td>
+            </tr>
+            <tr>
+                <td><select id='management_select_city'>
+                        <option id="almere">Almere</option>
+                        <option id="eindhoven">eindhoven</option>
+                        <option id="rotterdam">Rotterdam</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" placeholder="zoek op product">
+                </td>
+                <td>
+                    <input type="button" value="zoek">
+                </td>
+            </tr>
+        </table>
+
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Selecteer een stad of zoek naar een product</b><br>
+        </div>
+
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Eindhoven</b>
             <table>
                 <tr>
-                    <td>Username:</td>
-                    <td><input name="username" class="input_field"></td>
+                    <th>Totaal prod.</th>
+                    <th>Waarde ink.</th>
+                    <th>Waarde ver.</th>
                 </tr>
                 <tr>
-                    <td>Password:</td>
-                    <td><input name="password" class="input_field"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
+                    <td>42</td>
+                    <td>€2145,95</td>
+                    <td>€3057,89</td>
                 </tr>
             </table>
-        </form>
-        <script>
-            if (urlParams.get('login') == "fail") {
-                document.write("<div id='password_fail'>Login failed, please check credentials again.</div>");
-            }
-        </script>
-        <br>
-        <b class="password_forgotten">Forgot password?</b><br>
+        </div>
+
+
+
+
     </div>
 
 

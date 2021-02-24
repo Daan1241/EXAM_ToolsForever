@@ -26,6 +26,9 @@ if (!isset($_SESSION)) { // Session not yet started.
     <script src="dependencies/js/main.js"></script>
     <link rel="stylesheet" href="dependencies/css/variables.css">
     <link rel="stylesheet" href="dependencies/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <div id="topbar">
@@ -42,6 +45,19 @@ if (!isset($_SESSION)) { // Session not yet started.
             <div class="topbar_container">MANAGEMENT</div>
         </a>
         <?php
+        if (isset($sanitized)) {
+            $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
+            $run = $connection->prepare($sql);
+            $run->execute([$sanitized['username'], $sanitized['sessionID']]);
+            $dbdata_privileges = $run->fetchAll();
+
+            if (strtolower($dbdata_privileges[0][0]) == 'admin') {
+                echo "<a href=\"admin.php\">
+            <div class=\"topbar_container\">ADMIN</div>
+            </a>";
+            }
+        }
+
         if ($loggedIn == true) {
             echo "<a href=\"dependencies/php/logout.php\">
               <div class=\"topbar_container\">LOGOUT</div>
@@ -61,27 +77,27 @@ if (!isset($_SESSION)) { // Session not yet started.
             <img src="dependencies/img/banner.jpg" style="width: 100%">
         </div>
 
-            <?php
-            if ($loggedIn == true) {
-                echo "<div class=\"home_personal_details\">";
-                echo "<b style='font-size: 150%;'>Welcome " . $_SESSION['username'] . "</b><br>";
+        <?php
+        if ($loggedIn == true) {
+            echo "<div class=\"home_personal_details\">";
+            echo "<b style='font-size: 200%;'>Welkom " . $_SESSION['username'] . "</b><br>";
 
-                $sql = "SELECT DISTINCT * FROM users WHERE username=? AND sessionID=?";
-                $run = $connection->prepare($sql);
-                $run->execute([$sanitized['username'], $sanitized['sessionID']]);
-                $database_result = $run->fetchAll();
+            $sql = "SELECT DISTINCT * FROM users WHERE username=? AND sessionID=?";
+            $run = $connection->prepare($sql);
+            $run->execute([$sanitized['username'], $sanitized['sessionID']]);
+            $database_result = $run->fetchAll();
 
-                echo "<table>";
-                echo "<tr><td><b>username:</b></td><td>" . $database_result[0]['username'] . "</td></tr>";
-                echo "<tr><td><b>Privileges:</b></td><td>" . $database_result[0]['privileges'] . "</td></tr>";
-                echo "<tr><td><b>User ID:</b></td><td>" . $database_result[0]['UUID'] . "</td></tr>";
-                echo "</table>";
-                echo "</div>";
-            }
-            ?>
+            echo "<table>";
+            echo "<tr><td><b>username:</b></td><td>" . $database_result[0]['username'] . "</td></tr>";
+            echo "<tr><td><b>Privileges:</b></td><td>" . $database_result[0]['privileges'] . "</td></tr>";
+            echo "<tr><td><b>User ID:</b></td><td>" . $database_result[0]['UUID'] . "</td></tr>";
+            echo "</table>";
+            echo "</div>";
+        }
+        ?>
 
 
-        <div class="home_city_details_container">
+        <div class="home_city_details_container" onClick="window.location.href = 'management.php?city=almere';">
             <b style="font-size: 200%;">Almere</b>
             <table>
                 <tr>
@@ -95,6 +111,7 @@ if (!isset($_SESSION)) { // Session not yet started.
                     <td>€3057,89</td>
                 </tr>
             </table>
+            <br>
         </div>
 
         <div class="home_city_details_container">
@@ -132,37 +149,39 @@ if (!isset($_SESSION)) { // Session not yet started.
     <div id="side_menu">
         <b style='font-size: 150%;'>Beheer (<font color="red">!</font>)</b><br>
 
-        <ul style="list-style: ;">
-            - <b>Voorraad</b>
-            <ul style="list-style: square;">
-                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk voorraad</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Print voorraad</a></li>
-            </ul>
-            <br>
-
-            - <b>Locaties</b>
-            <ul style="list-style: square;">
-                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk locaties</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg locatie toe</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk locatie</a></li>
-            </ul>
-            <br>
-
-            - <b>Producten</b>
-            <ul style="list-style: square;">
-                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk producten</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg producten toe</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk producten</a></li>
-            </ul>
-            <br>
-
-            - <b>Medewerkers</b>
-            <ul style="list-style: square;">
-                <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk medewerkers</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg medewerker toe</a></li>
-                <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk medewerker info</a></li>
-            </ul>
-            <br>
+        <ul>
+            <div class="side_menu_list_item">
+                - <b>Voorraad</b>
+                <ul style="list-style: square;">
+                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk voorraad</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Print voorraad</a></li>
+                </ul>
+            </div>
+            <div class="side_menu_list_item">
+                - <b>Locaties</b>
+                <ul style="list-style: square;">
+                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk locaties</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg locatie toe</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk locatie</a></li>
+                </ul>
+            </div>
+            <div class="side_menu_list_item">
+                - <b>Producten</b>
+                <ul style="list-style: square;">
+                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk producten</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg producten toe</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk producten</a></li>
+                </ul>
+            </div>
+            <div class="side_menu_list_item">
+                - <b>Medewerkers</b>
+                <ul style="list-style: square;">
+                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk medewerkers</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg medewerker toe</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk medewerker info</a>
+                    </li>
+                </ul>
+            </div>
 
         </ul>
 
