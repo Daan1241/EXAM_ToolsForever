@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6d09bcc9-4294-4048-a257-60a78f6f05d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependencies/js/page_login.js" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/js/page_login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependencies/php/loginhandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/loginhandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies/css/variables.css" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/css/variables.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dependencies/php/pdo.php" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/php/pdo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependencies/sql/toolsforever_db_model.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/sql/toolsforever_db_model.mwb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependencies/sql/toolsforever_db_model.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies/sql/toolsforever_db_model.mwb.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/management.php" beforeDir="false" afterPath="$PROJECT_DIR$/management.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +72,7 @@
       <workItem from="1614158895095" duration="6191000" />
       <workItem from="1614180164227" duration="1399000" />
       <workItem from="1614189880495" duration="608000" />
-      <workItem from="1614256230306" duration="4407000" />
+      <workItem from="1614256230306" duration="10281000" />
     </task>
     <servers />
   </component>

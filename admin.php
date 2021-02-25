@@ -17,6 +17,7 @@ if (!isset($_SESSION)) { // Session not yet started.
         }
     } else {
         $loggedIn = false;
+        header("Location: index.php");
     }
 }
 
@@ -31,7 +32,7 @@ if (!isset($_SESSION)) { // Session not yet started.
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap"
           rel="stylesheet">
-    <script src="dependencies/js/page_login.js"></script>
+    <script src="dependencies/js/admin.js"></script>
 </head>
 <body>
 <div id="topbar">
@@ -77,39 +78,90 @@ if (!isset($_SESSION)) { // Session not yet started.
 <div id="wrapper">
     <br>
     <div id="management_container">
-        <table>
-            <tr>
-                <td><b>Gebruiker:</b></td>
-                <td><b>Privilege:</b></td>
-            </tr>
-            <tr>
-                <td><input type="text" id="admin_search_user_name"></td>
-                <td><select id="admin_search_user_privilege">
-                        <option name=""></option>
-                        <option name="admin">Admin</option>
-                        <option name="employee">Employee</option>
-                        <option name="client">Client</option>
-                    </select></td>
-            </tr>
-        </table>
+        <form action="#" method="POST">
+            <table>
+                <tr>
+                    <td><b>User:</b></td>
+                    <td><b>Privilege:</b></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="admin_search_user_name" id="admin_search_user_name"></td>
+                    <td><select name="admin_search_user_privilege" id="admin_search_user_privilege">
+                            <option name=""></option>
+                            <option name="admin">admin</option>
+                            <option name="employee">employee</option>
+                            <option name="client">client</option>
+                        </select>
+                    </td>
+                    <td><input type="submit" class="button_default" value="search"></td>
+                </tr>
+            </table>
+        </form>
 
 
         <div class="management_details_container">
             <b style="font-size: 200%;">Results</b>
-            <table style="text-align: left;">
+
+            <table style="text-align: left;" class="admin_table">
                 <tr>
-                    <th>User ID</th>
+                    <th>UUID</th>
                     <th>Username</th>
                     <th>E-mail</th>
                     <th>Password</th>
+                    <th>Salt</th>
+                    <th>Reset</th>
+                    <th>Verwijder</th>
                 </tr>
-                <tr>
-                    <td>42</td>
-                    <td>€2145,95</td>
-                    <td>meel@meel.com</td>
-                    <td><input type="button" value="reset"></td>
-                </tr>
+                <?php
+                $sanitized = filter_input_array(INPUT_POST, FILTER_SANITIZE_MAGIC_QUOTES);
+                if (isset($sanitized['admin_search_user_name']) || isset($sanitized['admin_search_user_privilege'])) {
+                    echo "Searching for '<b>".$sanitized['admin_search_user_name']."</b>'<a href='admin.php'>(cancel search)</a>.";
+
+                    if ($sanitized['admin_search_user_privilege'] == "" || $sanitized['admin_search_user_privilege'] == null) {
+                        $sql = "SELECT * FROM users WHERE username=?";
+                        $run = $connection->prepare($sql);
+                        $run->execute([$sanitized['admin_search_user_name']]);
+                        $result = $run->fetchAll();
+                    } else {
+                        $sql = "SELECT * FROM users WHERE username=? AND privileges=?";
+                        $run = $connection->prepare($sql);
+                        $run->execute([$sanitized['admin_search_user_name'], $sanitized['admin_search_user_privilege']]);
+                        $result = $run->fetchAll();
+                    }
+
+                    // Finally, print out result
+                    foreach ($result as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['UUID'] . "</td>";
+                        echo "<td>" . $row['username'] . "</td>";
+                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td class='admin_information_password'>" . $row['password'] . "</td>";
+                        echo "<td>" . $row['salt'] . "</td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\"></td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\"></td>";
+                    }
+                } else {
+                    $sql = "SELECT * FROM users";
+                    $run = $connection->prepare($sql);
+                    $run->execute();
+                    $result = $run->fetchAll();
+
+                    foreach ($result as $row) {
+                        echo "<tr>";
+                        echo "<td>" . $row['UUID'] . "</td>";
+                        echo "<td>" . $row['username'] . "</td>";
+                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td class='admin_information_password'>" . $row['password'] . "</td>";
+                        echo "<td>" . $row['salt'] . "</td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\"></td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\"></td>";
+                    }
+                }
+                ?>
             </table>
+
+
         </div>
 
 

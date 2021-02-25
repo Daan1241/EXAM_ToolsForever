@@ -92,7 +92,7 @@ if (!isset($_SESSION)) { // Session not yet started.
                     <input type="text" placeholder="zoek op product">
                 </td>
                 <td>
-                    <input type="button" value="zoek">
+                    <input type="button" class="button_default" value="zoek">
                 </td>
             </tr>
         </table>

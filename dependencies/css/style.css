@@ -25,9 +25,10 @@ a:hover {
 
 th, tr, td {
     border: 0px solid black;
+    padding-bottom: 1%;
 }
 
-input[type=button] {
+.button_default {
     border: 0px;
     background-color: var(--button);
     padding: 10%;
@@ -35,7 +36,7 @@ input[type=button] {
     width: 200%;
 }
 
-input[type=button]:hover {
+.button_default:hover {
     background-color: var(--button_hover);
     transition: .25s;
 }
@@ -100,9 +101,22 @@ input[type=button]:hover {
 
 /*login page*/
 
-/*management page*/
+/*admin page*/
+.admin_resetpassword {
+    width: 100%;
+    border: 0px;
+    background-color: var(--main_dark);
+    color: white;
+    transition: .125s;
+}
 
-/*management page*/
+.admin_resetpassword:hover {
+    background-color: var(--main_gray);
+    transition: .125s;
+}
+
+
+/*admin page*/
 
 
 /* Mobile */
@@ -147,7 +161,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -157,7 +171,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -175,8 +189,8 @@ input[type=button]:hover {
         margin-top: 5%;
         margin-left: 0%;
         padding: 1%;
-        width: 90%;
-        background-color: #efefef;
+        width: 95%;
+        background-color: var(--info_container);
         box-shadow: black 2px 2px;
 
     }
@@ -192,12 +206,10 @@ input[type=button]:hover {
     }
 
     /* home page */
-
-
     #side_menu {
         margin: auto;
         vertical-align: top;
-        background-color: #efefef;
+        background-color: var(--info_container);
         padding: 1%;
         width: 90%;
         margin-top: 3%;
@@ -211,6 +223,10 @@ input[type=button]:hover {
         vertical-align: top;
         font-size: 90%;
         margin-bottom: 5%;
+    }
+
+    .admin_table th, .admin_table td {
+        display: inline;
     }
 
 }
@@ -251,7 +267,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -261,7 +277,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -279,7 +295,7 @@ input[type=button]:hover {
     #side_menu {
         margin: auto;
         vertical-align: top;
-        background-color: #efefef;
+        background-color: var(--info_container);
         padding: 1%;
         width: 90%;
         margin-top: 3%;
@@ -293,6 +309,14 @@ input[type=button]:hover {
         background-color: transparent;
         vertical-align: top;
         font-size: 80%;
+    }
+
+    .admin_table th, .admin_table td {
+        display: table-cell;
+    }
+
+    .admin_information_password {
+        width: 10%;
     }
 
 }
@@ -339,7 +363,7 @@ input[type=button]:hover {
     #side_menu {
         display: inline-block;
         vertical-align: top;
-        background-color: #efefef;
+        background-color: var(--info_container);
         padding: 1%;
         float: right;
         width: 25%;
@@ -362,7 +386,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -372,7 +396,7 @@ input[type=button]:hover {
         margin: auto;
         margin-top: 5%;
         width: 90%;
-        background-color: #efefef;
+        background-color: var(--info_container);
         border: 5px solid transparent;
         box-shadow: black 2px 2px;
 
@@ -392,6 +416,14 @@ input[type=button]:hover {
 
     .login_form {
 
+    }
+
+    .admin_table th, .admin_table td {
+        display: table-cell;
+    }
+
+    .admin_information_password {
+        width: 100%;
     }
 
 }
