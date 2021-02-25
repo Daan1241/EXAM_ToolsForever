@@ -12,11 +12,14 @@ if (!isset($_SESSION)) { // Session not yet started.
         if (checkLogin($_SESSION['username'], $_SESSION['sessionID']) == "true") {
             $loggedIn = true;
             $sanitized = $_SESSION;
+
+            $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
         }
     } else {
         $loggedIn = false;
     }
 }
+
 ?>
 
 <html>
@@ -53,7 +56,7 @@ if (!isset($_SESSION)) { // Session not yet started.
 
             if (strtolower($dbdata_privileges[0][0]) == 'admin') {
                 echo "<a href=\"admin.php\">
-            <div class=\"topbar_container\">ADMIN</div>
+            <div class=\"topbar_container\"><b>ADMIN</b></div>
             </a>";
             }
         }
@@ -64,7 +67,7 @@ if (!isset($_SESSION)) { // Session not yet started.
               </a>";
         } else {
             echo "<a href=\"login.php\">
-              <div class=\"topbar_container\"><b>LOGIN</b></div>
+              <div class=\"topbar_container\">LOGIN</div>
               </a>";
         }
         ?>
@@ -73,63 +76,43 @@ if (!isset($_SESSION)) { // Session not yet started.
 
 <div id="wrapper">
     <br>
-    <div class="login_form_wrapper">
-        <b style="font-size: 200%;">Log-in</b>
-        <form method="POST" action="dependencies/php/loginhandler.php" class="login_form">
-            <table>
-                <tr>
-                    <td>Username:</td>
-                    <td><input type="text" name="username" class="input_field"></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="text" name="password" class="input_field"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
-                </tr>
-            </table>
-        </form>
-        <script>
-            if (urlParams.get('login') == "fail") {
-                document.write("<div id='password_fail'>Login failed, please check credentials again.</div>");
-            }
-        </script>
-        <br>
-        <b class="password_forgotten">Forgot password?</b><br>
+    <div id="management_container">
+        <table>
+            <tr>
+                <td><b>Gebruiker:</b></td>
+                <td><b>Privilege:</b></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="admin_search_user_name"></td>
+                <td><select id="admin_search_user_privilege">
+                        <option name=""></option>
+                        <option name="admin">Admin</option>
+                        <option name="employee">Employee</option>
+                        <option name="client">Client</option>
+                    </select></td>
+            </tr>
+        </table>
 
-        <br><br><br><br>
-        Or, create a new account
-        <form method="POST" action="dependencies/php/createaccount.php" class="login_form">
-            <table>
+
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Results</b>
+            <table style="text-align: left;">
                 <tr>
-                    <td>E-mail:</td>
-                    <td><input type="email" name="email" id="CA_email" class="input_field"></td>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>E-mail</th>
+                    <th>Password</th>
                 </tr>
                 <tr>
-                    <td>Username:</td>
-                    <td><input type="text" name="username" id="CA_username" class="input_field"></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" name="password" id="CA_password" class="input_field"></td>
-                </tr>
-                <tr>
-                    <td>Repeat password:</td>
-                    <td><input type="password" name="password_repeat" id="CA_password_repeat" onfocusout="checkPassword();"
-                               class="input_field"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
+                    <td>42</td>
+                    <td>€2145,95</td>
+                    <td>meel@meel.com</td>
+                    <td><input type="button" value="reset"></td>
                 </tr>
             </table>
-        </form>
-        <script>
-            if (urlParams.get('login') == "ERR_ALREADY_EXISTS") {
-                document.write("<div id='password_fail'>This account already exists. Please use a different username.</div>");
-            }
-        </script>
-        <span id="CA_password_mismatch"></span>
+        </div>
+
+
     </div>
 
 

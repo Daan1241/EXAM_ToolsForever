@@ -16,7 +16,7 @@ $result = $run->fetchAll();
 if ($result == null) {
     header("Location: ../../login.php?login=fail");
 } else {
-    if($result[0]['password'] == $sanitized['password']){
+    if($result[0]['password'] == sha1($sanitized['password'].$result[0]['salt'])){
         //echo "inloggen gelukt! Gebruiker ".$result[0]['username']." met wachtwoord ".$result[0]['password'];
         $_SESSION['sessionID'] = sha1($result[0]['password'].$salt);
         $_SESSION['username'] = $result[0]['username'];
