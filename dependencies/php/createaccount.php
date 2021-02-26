@@ -10,7 +10,7 @@ $result = $run->fetchAll();
 if ($result == null) { // Username does not exist yet, add to database.
     $salt = rand(1, 2122122);
     $password_encrypted = sha1($sanitized['password'].$salt);
-    $sql = "INSERT INTO users (email, username, password, privileges, salt) VALUES (?, ?, ?, 'admin', ?)";
+    $sql = "INSERT INTO users (email, username, password, privileges, salt) VALUES (?, ?, ?, 'client', ?)";
     $run = $connection->prepare($sql);
     $run->execute([$sanitized['email'], $sanitized['username'], $password_encrypted, $salt]);
     $result = $run->fetchAll();
