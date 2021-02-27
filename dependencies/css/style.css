@@ -25,6 +25,7 @@ a:hover {
 
 th, tr, td {
     border: 0px solid black;
+    text-align: left;
 }
 
 .button_default {
@@ -67,13 +68,13 @@ th, tr, td {
 }
 
 .management_existing_products {
-    background-color: white;
     display: inline-block;
     width: 100%;
     margin: auto;
 }
 
 .management_existing_products table {
+    background-color: white;
     text-align: left;
     width: 100%;
     font-size: 1vw;
@@ -86,6 +87,12 @@ th, tr, td {
 
 .management_existing_products_image{
     width: 50px;
+}
+
+
+.add_location_input {
+    width: 100%;
+    padding: 5%;
 }
 /* END management page */
 

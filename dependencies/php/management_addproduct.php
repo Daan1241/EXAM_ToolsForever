@@ -19,13 +19,10 @@ $run->execute([$sanitized['input_name'], $sanitized['input_brand'], $sanitized['
 $result = $run->fetchAll();
 
 // Then, add to the conector table with the correct information.
-
-// INSERT INTO locations_has_products (locations_locationID, locations_locationname, stock, min_stock, products_productID, products_productname) VALUES (0, , 45, 10, 1, "Accuboorhamer");
 $sql = "INSERT INTO locations_has_products (locations_locationname, products_productname, stock, min_stock) VALUES (?, ?, ?, ?);";
 $run = $connection->prepare($sql);
 $run->execute([$sanitized['location'], $sanitized['input_name'], $sanitized['input_stock'], $sanitized['input_minstock']]);
 $result = $run->fetchAll();
 
-// INSERT INTO table_name (column1, column2, column3, ...)
-// VALUES (value1, value2, value3, ...);
+header('Location: ../../management.php');
 ?>

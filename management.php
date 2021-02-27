@@ -104,15 +104,15 @@ if (!isset($_SESSION)) { // Session not yet started.
                 Location:
                 <select name="location">
                     <?php
-                    $sql = "SELECT * FROM locations";
-                    $run = $connection->prepare($sql);
-                    $run->execute();
-                    $result_getlocations = $run->fetchAll();
-                    print_r($result_getlocations);
+                        $sql = "SELECT * FROM locations";
+                        $run = $connection->prepare($sql);
+                        $run->execute();
+                        $result_getlocations = $run->fetchAll();
+                        print_r($result_getlocations);
 
-                    foreach ($result_getlocations as $getlocationinfo) {
-                        echo "<option>" . $getlocationinfo['locationname'] . "</option>";
-                    }
+                        foreach ($result_getlocations as $getlocationinfo) {
+                            echo "<option>" . $getlocationinfo['locationname'] . "</option>";
+                        }
                     ?>
                 </select>
                 <br><br>
@@ -131,10 +131,55 @@ if (!isset($_SESSION)) { // Session not yet started.
         </div>
 
         <div class="management_details_container">
-            <b style="font-size: 200%;">Producten: </b><br><br>
+            <form action="dependencies/php/management_addlocation.php" method="post">
+                <b style="font-size: 200%;">Add a location</b><br><br>
+                <table>
+                    <tr>
+                        <th>City</th>
+                        <th>Adress</th>
+                        <th>Zipcode</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="input_name" id="input_name" placeholder="City (e.g. Amsterdam)" class="add_location_input"></td>
+                        <td><input type="text" name="input_adress" id="input_name" placeholder="Adress (e.g. Buikslotermeerplein 264)" class="add_location_input"></td>
+                        <td><input type="text" name="input_zipcode" id="input_name" placeholder="1234AB" class="add_location_input"></td>
+                        <td><input type="text" name="input_description" id="input_name" placeholder="Location description" class="add_location_input"></td>
+                        <td><input type="submit" value="Add" class="add_location_input"></td>
+                    </tr>
+                </table>
+            </form>
+
+            <div class="management_existing_products">
+                <table>
+                    <tr>
+                        <th>Location</th>
+                        <th>Adress</th>
+                        <th>Description</th>
+                    </tr>
+                        <?php
+                            $sql = "SELECT DISTINCT * FROM locations";
+                            $run = $connection->prepare($sql);
+                            $run->execute();
+                            $result_locations = $run->fetchAll();
+
+                            foreach($result_locations as $locationinfo){
+                                echo "<tr>";
+                                echo "<td>".$locationinfo['locationname']."</td>";
+                                echo "<td>".$locationinfo['locationadress']."</td>";
+                                echo "<td>".$locationinfo['locationdescription']."</td>";
+                                echo "</tr>";
+                            }
+                        ?>
+                </table>
+            </div>
+        </div>
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Products at locations: </b><br><br>
             <div class="management_existing_products">
                 <?php
-                $sql = "SELECT * FROM locations";
+                $sql = "SELECT DISTINCT * FROM locations";
                 $run = $connection->prepare($sql);
                 $run->execute();
                 $result_locations = $run->fetchAll();
@@ -180,25 +225,15 @@ if (!isset($_SESSION)) { // Session not yet started.
                 ?>
                 </table>
             </div>
+            Actions:<br>
+            <input type="button" value="Delete selected" style="border: 0px; padding: 5px; background-color: red">
+
         </div>
 
-        <div class="management_details_container">
-            <b style="font-size: 200%;">Eindhoven</b>
-            <table>
-                <tr>
-                    <th>Totaal prod.</th>
-                    <th>Waarde ink.</th>
-                    <th>Waarde ver.</th>
-                </tr>
-                <tr>
-                    <td>42</td>
-                    <td>€2145,95</td>
-                    <td>€3057,89</td>
-                </tr>
-            </table>
-        </div>
-
-
+    <br>
+    <br>
+    <br>
+    <br>
     </div>
 
 
