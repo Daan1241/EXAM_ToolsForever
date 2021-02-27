@@ -29,7 +29,8 @@ if (!isset($_SESSION)) { // Session not yet started.
     <link rel="stylesheet" href="dependencies/css/variables.css">
     <link rel="stylesheet" href="dependencies/css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
     <script src="dependencies/js/page_login.js"></script>
 </head>
 <body>
@@ -98,7 +99,87 @@ if (!isset($_SESSION)) { // Session not yet started.
         </table>
 
         <div class="management_details_container">
-            <b style="font-size: 200%;">Selecteer een stad of zoek naar een product</b><br>
+            <form action="dependencies/php/management_addproduct.php" method="post">
+                <b style="font-size: 200%;">Add a product</b><br><br>
+                Location:
+                <select name="location">
+                    <?php
+                    $sql = "SELECT * FROM locations";
+                    $run = $connection->prepare($sql);
+                    $run->execute();
+                    $result_getlocations = $run->fetchAll();
+                    print_r($result_getlocations);
+
+                    foreach ($result_getlocations as $getlocationinfo) {
+                        echo "<option>" . $getlocationinfo['locationname'] . "</option>";
+                    }
+                    ?>
+                </select>
+                <br><br>
+
+                <input type="text" name="input_name" id="input_name" placeholder="Product name" class="add_product_input">
+                <input type="text" name="input_brand" id="input_brand" placeholder="Brand" class="add_product_input">
+                <input type="text" name="input_type" id="input_type" placeholder="Type" class="add_product_input">
+                <input type="number" step="0.01" placeholder="0,00" name="input_buyprice" id="input_buyprice" class="add_product_input">
+                <input type="number" step="0.01" placeholder="0,00" name="input_sellprice" id="input_sellprice" placeholder="Sell price" class="add_product_input">
+                <input type="number" name="input_stock" id="input_stock" placeholder="Stock" class="add_product_input">
+                <input type="number" name="input_minstock" id="input_minstock" placeholder="Stock" class="add_product_input">
+                <input type="file" name="input_file" id="input_file" placeholder="Stock" class="add_product_input">
+                <input type="submit" value="Add" class="add_product_input">
+
+            </form>
+        </div>
+
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Producten: </b><br><br>
+            <div class="management_existing_products">
+                <?php
+                $sql = "SELECT * FROM locations";
+                $run = $connection->prepare($sql);
+                $run->execute();
+                $result_locations = $run->fetchAll();
+
+                foreach ($result_locations as $locationinfo) {
+
+                    $sql = "SELECT * FROM locations_has_products JOIN products ON products_productname=productname WHERE locations_locationname = ?";
+                    $run = $connection->prepare($sql);
+                    $run->execute([$locationinfo['locationname']]);
+                    $result_stock = $run->fetchAll();
+
+                    if (isset($result_stock[0])) {
+                        echo "<table>";
+                        echo "<tr>";
+                        echo "<th style='width: 10%'>" . $locationinfo['locationname'] . "</th>";
+                        echo "<th style='width: 1%;'>Image</th>";
+                        echo "<th style='width: 10%'>Name</th>";
+                        echo "<th style='width: 10%'>Brand</th>";
+                        echo "<th style='width: 10%'>Type</th>";
+                        echo "<th style='width: 10%'>Buy Price</th>";
+                        echo "<th style='width: 10%'>Sell Price</th>";
+                        echo "<th style='width: 10%'>Stock</th>";
+                        echo "<th style='width: 10%'>Stock worth</th>";
+                        echo "</tr>";
+
+                        foreach ($result_stock as $index => $product) {
+                            echo "<tr>";
+                            echo "<td><input type=\"checkbox\"></td>";
+                            echo "<td><img src=\"dependencies/img/products/worx_accuboorhamer.jpg\" class=\"management_existing_products_image\"></td>";
+                            echo "<td>" . $product['productname'] . "</td>";
+                            echo "<td>" . $product['productbrand'] . "</td>";
+                            echo "<td>" . $product['producttype'] . "</td>";
+                            echo "<td>€" . $product['buyprice'] . "</td>";
+                            echo "<td>€" . $product['sellprice'] . "</td>";
+                            echo "<td>" . $product['stock'] . "</td>";
+                            echo "<td>€" . $product['stock'] * $product['sellprice'] . "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</td></table><br><br>";
+                    }
+
+                }
+                ?>
+                </table>
+            </div>
         </div>
 
         <div class="management_details_container">
@@ -116,8 +197,6 @@ if (!isset($_SESSION)) { // Session not yet started.
                 </tr>
             </table>
         </div>
-
-
 
 
     </div>

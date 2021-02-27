@@ -25,7 +25,7 @@ if (!isset($_SESSION)) { // Session not yet started.
 
 <html>
 <head>
-    <title>ToolsForEver - Home</title>
+    <title>ToolsForEver - Admin</title>
     <script src="dependencies/js/main.js"></script>
     <link rel="stylesheet" href="dependencies/css/variables.css">
     <link rel="stylesheet" href="dependencies/css/style.css">

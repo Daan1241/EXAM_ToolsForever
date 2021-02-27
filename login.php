@@ -116,7 +116,8 @@ if (!isset($_SESSION)) { // Session not yet started.
                 </tr>
                 <tr>
                     <td>Repeat password:</td>
-                    <td><input type="password" name="password_repeat" id="CA_password_repeat" onfocusout="checkPassword();"
+                    <td><input type="password" name="password_repeat" id="CA_password_repeat"
+                               onfocusout="checkPassword();"
                                class="input_field"></td>
                 </tr>
                 <tr>

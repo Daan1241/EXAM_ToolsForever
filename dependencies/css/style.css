@@ -25,7 +25,6 @@ a:hover {
 
 th, tr, td {
     border: 0px solid black;
-    padding-bottom: 1%;
 }
 
 .button_default {
@@ -42,7 +41,7 @@ th, tr, td {
 }
 
 
-/* home page */
+/* START home page */
 .home_city_details_container th {
     border-bottom: 2px solid black;
 }
@@ -51,11 +50,46 @@ th, tr, td {
     border-bottom: 1px solid black;
     font-size: 95%;
 }
+/* END home page */
 
-/* home page */
+/* START management page */
 
 
-/*login page*/
+.add_product_input * {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.add_product_input .input_field {
+    border: 1px solid gray;
+    background-color: white;
+    padding: 1%;
+}
+
+.management_existing_products {
+    background-color: white;
+    display: inline-block;
+    width: 100%;
+    margin: auto;
+}
+
+.management_existing_products table {
+    text-align: left;
+    width: 100%;
+    font-size: 1vw;
+}
+
+.management_existing_products tr,.management_existing_products th, .management_existing_products td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.management_existing_products_image{
+    width: 50px;
+}
+/* END management page */
+
+/* START login page*/
 .input_field {
     border: 1px solid gray;
     background-color: white;
@@ -98,10 +132,10 @@ th, tr, td {
     margin: auto;
     width: 90%;
 }
+/* END login page*/
 
-/*login page*/
 
-/*admin page*/
+/* START admin page*/
 .admin_resetpassword {
     width: 100%;
     border: 0px;
@@ -114,9 +148,7 @@ th, tr, td {
     background-color: var(--main_gray);
     transition: .125s;
 }
-
-
-/*admin page*/
+/* END admin page*/
 
 
 /* Mobile */
@@ -227,6 +259,14 @@ th, tr, td {
 
     .admin_table th, .admin_table td {
         display: inline;
+    }
+
+    .add_product_input {
+        display: block;
+        padding: .5%;
+        width: 90%;
+        margin: auto;
+        border: 1px solid black;
     }
 
 }
@@ -424,6 +464,13 @@ th, tr, td {
 
     .admin_information_password {
         width: 100%;
+    }
+
+    .add_product_input {
+        display: inline-block;
+        padding: .5%;
+        width: 10%;
+        border: 1px solid black;
     }
 
 }
