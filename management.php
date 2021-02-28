@@ -142,10 +142,10 @@ if (!isset($_SESSION)) { // Session not yet started.
                         <th></th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="input_name" id="input_name" placeholder="City (e.g. Amsterdam)" class="add_location_input"></td>
-                        <td><input type="text" name="input_adress" id="input_name" placeholder="Adress (e.g. Buikslotermeerplein 264)" class="add_location_input"></td>
-                        <td><input type="text" name="input_zipcode" id="input_name" placeholder="1234AB" class="add_location_input"></td>
-                        <td><input type="text" name="input_description" id="input_name" placeholder="Location description" class="add_location_input"></td>
+                        <td><input type="text" maxlength="64" name="input_name" id="input_name" placeholder="City (e.g. Amsterdam)" class="add_location_input"></td>
+                        <td><input type="text" maxlength="256" name="input_adress" id="input_name" placeholder="Adress (e.g. Buikslotermeerplein 264)" class="add_location_input"></td>
+                        <td><input type="text" maxlength="6" name="input_zipcode" id="input_name" placeholder="1234AB" class="add_location_input"></td>
+                        <td><input type="text" maxlength="128" name="input_description" id="input_name" placeholder="Location description" class="add_location_input"></td>
                         <td><input type="submit" value="Add" class="add_location_input"></td>
                     </tr>
                 </table>
@@ -156,6 +156,7 @@ if (!isset($_SESSION)) { // Session not yet started.
                     <tr>
                         <th>Location</th>
                         <th>Adress</th>
+                        <th>Zipcode</th>
                         <th>Description</th>
                     </tr>
                         <?php
@@ -168,6 +169,7 @@ if (!isset($_SESSION)) { // Session not yet started.
                                 echo "<tr>";
                                 echo "<td>".$locationinfo['locationname']."</td>";
                                 echo "<td>".$locationinfo['locationadress']."</td>";
+                                echo "<td>".$locationinfo['zipcode_numbers'].$locationinfo['zipcode_letters']."</td>";
                                 echo "<td>".$locationinfo['locationdescription']."</td>";
                                 echo "</tr>";
                             }

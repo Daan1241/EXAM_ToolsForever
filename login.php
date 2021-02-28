@@ -28,7 +28,6 @@ if (!isset($_SESSION)) { // Session not yet started.
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap"
           rel="stylesheet">
-    <script src="dependencies/js/page_login.js"></script>
 </head>
 <body>
 <div id="topbar">
@@ -79,22 +78,17 @@ if (!isset($_SESSION)) { // Session not yet started.
             <table>
                 <tr>
                     <td>Username:</td>
-                    <td><input type="text" name="username" class="input_field"></td>
+                    <td><input type="text" name="username" class="input_field" required></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input type="text" name="password" class="input_field"></td>
+                    <td><input type="text" name="password" class="input_field" required></td>
                 </tr>
                 <tr>
                     <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
                 </tr>
             </table>
         </form>
-        <script>
-            if (urlParams.get('login') == "fail") {
-                document.write("<div id='password_fail'>Login failed, please check credentials again.</div>");
-            }
-        </script>
         <br>
         <b class="password_forgotten">Forgot password?</b><br>
 
@@ -104,36 +98,32 @@ if (!isset($_SESSION)) { // Session not yet started.
             <table>
                 <tr>
                     <td>E-mail:</td>
-                    <td><input type="email" name="email" id="CA_email" class="input_field"></td>
+                    <td><input type="email" name="email" id="CA_email" class="input_field" required></td>
                 </tr>
                 <tr>
                     <td>Username:</td>
-                    <td><input type="text" name="username" id="CA_username" class="input_field"></td>
+                    <td><input type="text" name="username" id="CA_username" class="input_field" required></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input type="password" name="password" id="CA_password" class="input_field"></td>
+                    <td><input type="password" name="password" id="CA_password" class="input_field" required></td>
                 </tr>
                 <tr>
                     <td>Repeat password:</td>
                     <td><input type="password" name="password_repeat" id="CA_password_repeat"
                                onfocusout="checkPassword();"
-                               class="input_field"></td>
+                               class="input_field" required></td>
                 </tr>
                 <tr>
                     <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
                 </tr>
             </table>
         </form>
-        <script>
-            if (urlParams.get('login') == "ERR_ALREADY_EXISTS") {
-                document.write("<div id='password_fail'>This account already exists. Please use a different username.</div>");
-            }
-        </script>
-        <span id="CA_password_mismatch"></span>
+        <p class="alert" id="alert"></p>
     </div>
 
 
 </div>
 </body>
+<script src="dependencies/js/page_login.js"></script>
 </html>
