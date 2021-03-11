@@ -1,23 +1,10 @@
 <?php
 //error_reporting (10000);
+$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 
-$loggedIn = false;
 
-if (!isset($_SESSION)) { // Session not yet started.
-    session_start();
-    echo 'New session started.'; // Still empty, asking for username or sessionID will result in an error.
-} else {
-    if (!$_SESSION == null) { // Session has variables in it.
-        if (checkLogin($_SESSION['username'], $_SESSION['sessionID']) == "true") {
-            $loggedIn = true;
-            $sanitized = $_SESSION;
-        }
-    } else {
-        $loggedIn = false;
-    }
-}
 ?>
 
 <html>
@@ -43,6 +30,9 @@ if (!isset($_SESSION)) { // Session not yet started.
         </a>
         <a href="management.php">
             <div class="topbar_container">MANAGEMENT</div>
+        </a>
+        <a href="locations.php">
+            <div class="topbar_container">LOCATIONS</div>
         </a>
         <?php
         if (isset($sanitized)) {
@@ -98,52 +88,8 @@ if (!isset($_SESSION)) { // Session not yet started.
 
 
         <div class="home_city_details_container" onClick="window.location.href = 'management.php?city=almere';">
-            <b style="font-size: 200%;">Almere</b>
-            <table>
-                <tr>
-                    <th>Totaal producten</th>
-                    <th>Waarde inkoop</th>
-                    <th>Waarde verkoop</th>
-                </tr>
-                <tr>
-                    <td>42</td>
-                    <td>€2145,95</td>
-                    <td>€3057,89</td>
-                </tr>
-            </table>
+            <b style="font-size: 200%;">ToolsForever Management System</b><br><br>
             <br>
-        </div>
-
-        <div class="home_city_details_container">
-            <b style="font-size: 200%;">Eindhoven</b>
-            <table>
-                <tr>
-                    <th>Totaal producten</th>
-                    <th>Waarde inkoop</th>
-                    <th>Waarde verkoop</th>
-                </tr>
-                <tr>
-                    <td>42</td>
-                    <td>€2145,95</td>
-                    <td>€3057,89</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="home_city_details_container">
-            <b style="font-size: 200%;">Rotterdam</b>
-            <table>
-                <tr>
-                    <th>Totaal producten</th>
-                    <th>Waarde inkoop</th>
-                    <th>Waarde verkoop</th>
-                </tr>
-                <tr>
-                    <td>42</td>
-                    <td>€2145,95</td>
-                    <td>€3057,89</td>
-                </tr>
-            </table>
         </div>
     </div>
     <div id="side_menu">
@@ -151,34 +97,34 @@ if (!isset($_SESSION)) { // Session not yet started.
 
         <ul>
             <div class="side_menu_list_item">
-                - <b>Voorraad</b>
+                - <b>Stock</b>
                 <ul style="list-style: square;">
-                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk voorraad</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Print voorraad</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php?action=look">View stock</a></li>
                 </ul>
             </div>
             <div class="side_menu_list_item">
-                - <b>Locaties</b>
+                - <b>Products</b>
                 <ul style="list-style: square;">
-                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk locaties</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg locatie toe</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk locatie</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php#products">Manage products</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php#addproducts">Add products</a></li>
+                    <li><a class="side_menu_quicklink" href="management.php#searchproducts">Search products</a></li>
                 </ul>
             </div>
             <div class="side_menu_list_item">
-                - <b>Producten</b>
+                - <b>Locations</b>
                 <ul style="list-style: square;">
-                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk producten</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg producten toe</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk producten</a></li>
+                    <li><a class="side_menu_quicklink" href="locations.php#locations">View locations</a></li>
+                    <li><a class="side_menu_quicklink" href="locations.php#addlocations">Add locations</a></li>
+                    <li><a class="side_menu_quicklink" href="locations.php#modifylocations">Modify locations</a></li>
                 </ul>
             </div>
+
             <div class="side_menu_list_item">
-                - <b>Medewerkers</b>
+                - <b>Users</b>
                 <ul style="list-style: square;">
-                    <li><a class="side_menu_quicklink" href="management.php?action=look">Bekijk medewerkers</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Voeg medewerker toe</a></li>
-                    <li><a class="side_menu_quicklink" href="management.php?action=print">Bewerk medewerker info</a>
+                    <li><a class="side_menu_quicklink" href="admin.php">View users</a></li>
+                    <li><a class="side_menu_quicklink" href="admin.php">Add users</a></li>
+                    <li><a class="side_menu_quicklink" href="admin.php">Modify users</a>
                     </li>
                 </ul>
             </div>

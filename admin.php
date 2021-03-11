@@ -1,26 +1,11 @@
 <?php
+$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 
-$loggedIn = false;
-
-if (!isset($_SESSION)) { // Session not yet started.
-    session_start();
-    echo 'New session started.'; // Still empty, asking for username or sessionID will result in an error.
-} else {
-    if (!$_SESSION == null) { // Session has variables in it.
-        if (checkLogin($_SESSION['username'], $_SESSION['sessionID']) == "true") {
-            $loggedIn = true;
-            $sanitized = $_SESSION;
-
-            $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
-        }
-    } else {
-        $loggedIn = false;
-        header("Location: index.php");
-    }
+if ($loggedIn == false) {
+    header("Location: login.php?alert=no_access");
 }
-
 ?>
 
 <html>
@@ -47,6 +32,9 @@ if (!isset($_SESSION)) { // Session not yet started.
         </a>
         <a href="management.php">
             <div class="topbar_container">MANAGEMENT</div>
+        </a>
+        <a href="locations.php">
+            <div class="topbar_container">LOCATIONS</div>
         </a>
         <?php
         if (isset($sanitized)) {
@@ -78,45 +66,74 @@ if (!isset($_SESSION)) { // Session not yet started.
 <div id="wrapper">
     <br>
     <div id="management_container">
-        <form action="#" method="POST">
-            <table>
-                <tr>
-                    <td><b>User:</b></td>
-                    <td><b>Privilege:</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="admin_search_user_name" id="admin_search_user_name"></td>
-                    <td><select name="admin_search_user_privilege" id="admin_search_user_privilege">
-                            <option name=""></option>
-                            <option name="admin">admin</option>
-                            <option name="employee">employee</option>
-                            <option name="client">client</option>
-                        </select>
-                    </td>
-                    <td><input type="submit" class="button_default" value="search"></td>
-                </tr>
-            </table>
-        </form>
+        <div class="management_details_container">
+            <b style="font-size: 200%;">Create account</b><br><br>
+            <form method="POST" action="dependencies/php/createaccount.php" class="login_form">
+                <table>
+                    <tr>
+                        <td>E-mail:</td>
+                        <td><input type="email" name="email" id="CA_email" class="input_field" required></td>
+                    </tr>
+                    <tr>
+                        <td>Username:</td>
+                        <td><input type="text" name="username" id="CA_username" class="input_field" required></td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2"><br><input type="submit" value="Create account" class="input_submit"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
 
 
         <div class="management_details_container">
-            <b style="font-size: 200%;">Results</b>
+            <b style="font-size: 200%;">Search user</b><br><br>
+            <form action="#" method="POST">
+                <table>
+                    <tr>
+                        <td><b>User:</b></td>
+                        <td><b>Privilege:</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="admin_search_user_name" id="admin_search_user_name" value="<?php
+                            $sanitized = filter_input_array(INPUT_POST, FILTER_SANITIZE_MAGIC_QUOTES);
+                            if (isset($sanitized['admin_search_user_privilege'])) {
+                                echo "SF: " . $sanitized['admin_search_user_privilege'];
+                            }
+                            ?>"></td>
+                        <td><select name="admin_search_user_privilege" id="admin_search_user_privilege">
+                                <option name=""></option>
+                                <option name="admin">admin</option>
+                                <option name="employee">employee</option>
+                                <option name="client">client</option>
+                            </select>
+                        </td>
+                        <td><input type="submit" class="button_default" value="search"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+
+        <div class="management_details_container">
+            <b style="font-size: 200%;">All users</b><br><br>
 
             <table style="text-align: left;" class="admin_table">
                 <tr>
-                    <th>UUID</th>
-                    <th>Username</th>
-                    <th>E-mail</th>
-                    <th>Password</th>
+                    <th width="5%">UUID</th>
+                    <th width="10%">Username</th>
+                    <th width="15%">E-mail</th>
+                    <th width="20%">Password (Hashed & encrypted)</th>
                     <th>Salt</th>
-                    <th>Reset</th>
+                    <th>Role</th>
+                    <th>Password</th>
                     <th>Verwijder</th>
                 </tr>
                 <?php
-                $sanitized = filter_input_array(INPUT_POST, FILTER_SANITIZE_MAGIC_QUOTES);
                 if (isset($sanitized['admin_search_user_name']) || isset($sanitized['admin_search_user_privilege'])) {
-                    echo "Searching for '<b>".$sanitized['admin_search_user_name']."</b>'<a href='admin.php'>(cancel search)</a>.";
+                    echo "Searching for '<b>" . $sanitized['admin_search_user_name'] . "</b>'<a href='admin.php'>(cancel search)</a>.";
 
                     if ($sanitized['admin_search_user_privilege'] == "" || $sanitized['admin_search_user_privilege'] == null) {
                         $sql = "SELECT * FROM users WHERE username=?";
@@ -134,12 +151,19 @@ if (!isset($_SESSION)) { // Session not yet started.
                     foreach ($result as $row) {
                         echo "<tr>";
                         echo "<td>" . $row['UUID'] . "</td>";
-                        echo "<td>" . $row['username'] . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td onclick='admin_modify(this)'>" . $row['username'] . "</td>";
+                        echo "<td onclick='admin_modify(this)'>" . $row['email'] . "</td>";
                         echo "<td class='admin_information_password'>" . $row['password'] . "</td>";
                         echo "<td>" . $row['salt'] . "</td>";
-                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\"></td>";
-                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\"></td>";
+                        if ($row['privileges'] == 'admin') {
+                            echo "<td><select><option name='admin' selected='selected'>Admin</option><option name='employee'>Employee</option><option name='client'>Client</option></select></td>";
+                        } else if ($row['privileges'] == 'employee') {
+                            echo "<td><select><option name='admin'>Admin</option><option name='employee' selected='selected'>Employee</option><option name='client'>Client</option></select></td>";
+                        } else if ($row['privileges'] == 'client') {
+                            echo "<td><select><option name='admin'>Admin</option><option name='employee'>Employee</option><option name='client' selected='selected'>Client</option></select></td>";
+                        }
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\" onclick=\"resetpassword('" . $row['UUID'] . "')\"></td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\" onclick=\"deleteuser('" . $row['UUID'] . "')\"></td>";
                     }
                 } else {
                     $sql = "SELECT * FROM users";
@@ -150,12 +174,20 @@ if (!isset($_SESSION)) { // Session not yet started.
                     foreach ($result as $row) {
                         echo "<tr>";
                         echo "<td>" . $row['UUID'] . "</td>";
-                        echo "<td>" . $row['username'] . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td onclick='admin_modify(this)'>" . $row['username'] . "</td>";
+                        echo "<td onclick='admin_modify(this)'>" . $row['email'] . "</td>";
                         echo "<td class='admin_information_password'>" . $row['password'] . "</td>";
                         echo "<td>" . $row['salt'] . "</td>";
-                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\"></td>";
-                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\"></td>";
+                        if ($row['privileges'] == 'admin') {
+                            echo "<td><select><option name='admin' selected='selected'>Admin</option><option name='employee'>Employee</option><option name='client'>Client</option></select></td>";
+                        } else if ($row['privileges'] == 'employee') {
+                            echo "<td><select><option name='admin'>Admin</option><option name='employee' selected='selected'>Employee</option><option name='client'>Client</option></select></td>";
+                        } else if ($row['privileges'] == 'client') {
+                            echo "<td><select><option name='admin'>Admin</option><option name='employee'>Employee</option><option name='client' selected='selected'>Client</option></select></td>";
+                        }
+
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"reset\" onclick=\"resetpassword('" . $row['UUID'] . "')\"></td>";
+                        echo "<td><input type=\"button\" class=\"admin_resetpassword\" value=\"delete\" onclick=\"deleteuser('" . $row['UUID'] . "')\"></td>";
                     }
                 }
                 ?>

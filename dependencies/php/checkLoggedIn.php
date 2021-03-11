@@ -1,4 +1,18 @@
 <?php
+session_start();
+if (!isset($_SESSION)) { // Session not yet started.
+    // New session started
+    echo 'New session started.'; // Still empty, asking for username or sessionID will result in an error.
+} else {
+    if (!$_SESSION == null) { // Session has variables in it.
+        if (checkLogin($_SESSION['username'], $_SESSION['sessionID']) == "true") {
+            $loggedIn = true;
+            $sanitized = $_SESSION;
+        }
+    } else {
+        $loggedIn = false;
+    }
+}
 
 
 function checkLogin($username_raw, $sessionID_raw)
@@ -15,7 +29,6 @@ function checkLogin($username_raw, $sessionID_raw)
 
     if (!$database_result == null || $database_result == "") {
         if ($sanitized_username == $database_result[0]['username'] && $sanitized_sessionID == $database_result[0]['sessionID']) {
-//            echo "succesvol ingelogd als " . $database_result[0]['username'];
             return "true";
         } else {
             return "false";
