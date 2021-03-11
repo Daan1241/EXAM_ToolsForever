@@ -23,6 +23,10 @@ a:hover {
     color: var(--link_hover);
 }
 
+.alert {
+    color: red;
+}
+
 th, tr, td {
     border: 0px solid black;
     text-align: left;
