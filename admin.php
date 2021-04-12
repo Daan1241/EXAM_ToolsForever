@@ -1,11 +1,16 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 
+// Only allows logged in users to this page. Redirect to login page if this is not the case.
 if ($loggedIn == false) {
     header("Location: login.php?alert=no_access");
 }
+
+// Checking if the logged in user is an administrator will be checked later on loading the page
 ?>
 
 <html>
@@ -46,10 +51,13 @@ if ($loggedIn == false) {
             $run->execute([$sanitized['username'], $sanitized['sessionID']]);
             $dbdata_privileges = $run->fetchAll();
 
+            // !!!important!!! - Checks if the current logged in user is an administrator, and if not, redirect back to the home page.
             if (strtolower($dbdata_privileges[0][0]) == 'admin') {
                 echo "<a href=\"admin.php\">
             <div class=\"topbar_container\"><b>ADMIN</b></div>
             </a>";
+            } else {
+                header("Location: index.php");
             }
         }
 
@@ -101,6 +109,7 @@ if ($loggedIn == false) {
                     </tr>
                     <tr>
                         <td><input type="text" name="admin_search_user_name" id="admin_search_user_name" value="<?php
+                            // Search for people by privilege
                             $sanitized = filter_input_array(INPUT_POST, FILTER_SANITIZE_MAGIC_QUOTES);
                             if (isset($sanitized['admin_search_user_privilege'])) {
                                 echo "SF: " . $sanitized['admin_search_user_privilege'];
@@ -135,6 +144,7 @@ if ($loggedIn == false) {
                     <th>Verwijder</th>
                 </tr>
                 <?php
+                // This code reads all users from the database and prints them in a table.
                 if (isset($sanitized['admin_search_user_name']) || isset($sanitized['admin_search_user_privilege'])) {
                     echo "Searching for '<b>" . $sanitized['admin_search_user_name'] . "</b>'<a href='admin.php'>(cancel search)</a>.";
 

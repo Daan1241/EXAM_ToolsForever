@@ -1,14 +1,14 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 
+// Only allows logged in users to this page. Redirect to login page if this is not the case.
 if ($loggedIn == false) {
     header("Location: login.php?alert=no_access");
 }
-
-
-
 ?>
 
 <html>
@@ -40,6 +40,7 @@ if ($loggedIn == false) {
             <div class="topbar_container">LOCATIONS</div>
         </a>
         <?php
+        // Checks if logged in user is an administrator, and if so, adds the link to the admin page to the navigation bar.
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
@@ -107,6 +108,7 @@ if ($loggedIn == false) {
 </div>
 </body>
 <script>
+    // Shows error message when password and repeated password don't match.
     function checkPassword() {
         if (document.getElementById('CA_password_repeat').value != document.getElementById('CA_password').value) {
             document.getElementById('alert').innerHTML = "Password and repeated password do not match, please check again";

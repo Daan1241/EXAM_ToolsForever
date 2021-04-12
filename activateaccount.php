@@ -1,7 +1,10 @@
 <?php
+// Sanitize GET values to prevent unwanted code execution
 $sanitized = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
 
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 ?>
@@ -34,12 +37,14 @@ require "dependencies/php/checkLoggedIn.php";
             <div class="topbar_container">LOCATIONS</div>
         </a>
         <?php
+        // Checks if user is logged in as administrator, and if so, adds the admin page to the navigation bar.
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
             $run->execute([$sanitized['username'], $sanitized['sessionID']]);
             $dbdata_privileges = $run->fetchAll();
 
+            // Checks if logged in user is Administrator.
             if (strtolower($dbdata_privileges[0][0]) == 'admin') {
                 echo "<a href=\"admin.php\">
             <div class=\"topbar_container\">ADMIN</div>
@@ -47,6 +52,7 @@ require "dependencies/php/checkLoggedIn.php";
             }
         }
 
+        // Uses CheckLoggedIn.php to detect if the user is logged in.
         if ($loggedIn == true) {
             echo "<a href=\"dependencies/php/logout.php\">
               <div class=\"topbar_container\">LOGOUT</div>

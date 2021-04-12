@@ -1,7 +1,11 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
+
+// Sanitizes received GET variables.
 $sanitized_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
 
 
@@ -44,6 +48,7 @@ if ($loggedIn == true) {
             <div class="topbar_container"><b>ORDERS</b></div>
         </a>
         <?php
+        // Checks if logged in user is an administrator and if so, adds a link to the admin page to the navigation bar
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
@@ -128,18 +133,11 @@ if ($loggedIn == true) {
             </form>
             <span id="message" class="message"></span>
         </div>
-
-
-
-
-
         <br>
         <br>
         <br>
         <br>
     </div>
-
-
 </div>
 </body>
 <script src="dependencies/js/page_login.js"></script>

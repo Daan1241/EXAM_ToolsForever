@@ -1,5 +1,7 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
 ?>
@@ -35,6 +37,7 @@ require "dependencies/php/checkLoggedIn.php";
             <div class="topbar_container">ORDERS</div>
         </a>
         <?php
+        // Checks if user is logged in as administrator, and if so, adds the admin page to the navigation bar.
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);

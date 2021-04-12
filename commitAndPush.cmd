@@ -1,5 +1,5 @@
 git add *
 git reset dependencies/php/pdo.php
-git commit -m "Added a page to order products. Products low or out of stock now have their own section where new stock can quickly be ordered. + some bug fixes"
+git commit -m "Final commit. Last bug fixes and added some comments on the not-so-very-obvious code."
 git push -f
 pause

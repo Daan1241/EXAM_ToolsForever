@@ -1,7 +1,11 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
+
+// Sanitizes received GET variables.
 $sanitized_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
 
 
@@ -10,8 +14,6 @@ if ($loggedIn == true) {
 } else {
     header("Location: login.php?alert=no_access");
 }
-
-
 ?>
 
 <html>
@@ -47,6 +49,7 @@ if ($loggedIn == true) {
             <div class="topbar_container">ORDERS</div>
         </a>
         <?php
+        // Checks if user is logged in as administrator, and if so, adds the admin page to the navigation bar.
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
@@ -84,12 +87,14 @@ if ($loggedIn == true) {
                 Location:
                 <select name="location">
                     <?php
+                    // Receives all locations from the database.
                     $sql = "SELECT DISTINCT * FROM locations";
                     $run = $connection->prepare($sql);
                     $run->execute();
                     $result_getlocations = $run->fetchAll();
                     print_r($result_getlocations);
 
+                    // Adds every location to the select field.
                     foreach ($result_getlocations as $getlocationinfo) {
                         echo "<option>" . $getlocationinfo['locationname'] . "</option>";
                     }
@@ -142,16 +147,14 @@ if ($loggedIn == true) {
                         <td><select id='management_select_city_from' name="select_location" onclick="getproducts_ID_list(this);" required>
                                 <option disabled selected>From Location</option>
                                 <?php
+                                // Receives every location that has products
                                 $sql = "SELECT DISTINCT locationname FROM locations_has_products JOIN locations ON locations_locationID=locationID";
                                 $run = $connection->prepare($sql);
                                 $run->execute();
                                 $result_all_productlocations = $run->fetchAll();
 
-
                                 foreach ($result_all_productlocations as $item) {
-
                                     echo "<option id=\"" . $item['locationname'] . "\">" . $item['locationname'] . "</option>";
-
                                 }
                                 ?>
                             </select>
@@ -160,11 +163,12 @@ if ($loggedIn == true) {
                             <select id="products_select_list_from" onchange="getProductID(this.value)" name="select_product" required>
                                 <option disabled selected>add Product</option>
                                 <?php
-
+                                // Receives all products from the selected location
                                 $sql = "SELECT DISTINCT * FROM locations_has_products JOIN products ON products_productID=productID JOIN locations ON locations_locationID=locationID WHERE locationname=?";
                                 $run = $connection->prepare($sql);
                                 $run->execute([$sanitized_GET['location']]);
                                 $result_products_at_location = $run->fetchAll();
+
                                 foreach ($result_products_at_location as $product) {
                                     echo "<option id=\"" . $product['products_productID'] . "\">" . $product['productname'] . "</option>";
                                 }
@@ -175,16 +179,14 @@ if ($loggedIn == true) {
                         <td><select id='management_select_city' name="to_location" required>
                                 <option disabled selected>to Location</option>
                                 <?php
+                                // Receives all locations that the selected product can be copied from
                                 $sql = "SELECT DISTINCT locationname FROM locations_has_products JOIN locations ON locations_locationID=locationID";
                                 $run = $connection->prepare($sql);
                                 $run->execute();
                                 $result_all_productlocations = $run->fetchAll();
 
-
                                 foreach ($result_all_productlocations as $item) {
-
                                     echo "<option id=\"" . $item['locationname'] . "\">" . $item['locationname'] . "</option>";
-
                                 }
                                 ?>
                             </select>
@@ -209,18 +211,18 @@ if ($loggedIn == true) {
             Click a value to edit it<br><br>
             <div class="management_existing_products" id="products_container">
                 <?php
+                // Receives all locations
                 $sql = "SELECT DISTINCT * FROM locations";
                 $run = $connection->prepare($sql);
                 $run->execute();
                 $result_locations = $run->fetchAll();
 
+                // Prints out information of every product, with a different table for all locations
                 foreach ($result_locations as $locationinfo) {
-
                     $sql = "SELECT DISTINCT * FROM locations_has_products JOIN products ON products_productID=productID JOIN locations ON locations_locationID=locationID WHERE locationname = ?";
                     $run = $connection->prepare($sql);
                     $run->execute([$locationinfo['locationname']]);
                     $result_stock = $run->fetchAll();
-//                    print("<pre>".print_r($result_stock,true)."</pre>");
 
                     if (isset($result_stock[0])) {
                         echo "<table>";
@@ -272,6 +274,7 @@ if ($loggedIn == true) {
             <b style="font-size: 200%;">Products low on stock</b><br><br>
             <div class="management_existing_products" id="products_container">
                 <?php
+                // Receives products that are low on stock (where stock is lower than the specified minimum stock).
                 $sql = "SELECT DISTINCT * FROM locations";
                 $run = $connection->prepare($sql);
                 $run->execute();
@@ -283,7 +286,6 @@ if ($loggedIn == true) {
                     $run = $connection->prepare($sql);
                     $run->execute([$locationinfo['locationname']]);
                     $result_stock = $run->fetchAll();
-//                    print("<pre>".print_r($result_stock,true)."</pre>");
 
                     if (isset($result_stock[0])) {
                         echo "<table>";
@@ -343,6 +345,7 @@ if ($loggedIn == true) {
                         <td><select id='management_select_city' name="location" onclick="getproducts_list(this);">
                                 <option disabled selected>Select Location</option>
                                 <?php
+                                // Receives all locations and puts them in a selection input field.
                                 $sql = "SELECT DISTINCT locationname FROM locations_has_products JOIN locations ON locations_locationID=locationID";
                                 $run = $connection->prepare($sql);
                                 $run->execute();
@@ -350,9 +353,7 @@ if ($loggedIn == true) {
 
 
                                 foreach ($result_all_productlocations as $item) {
-
                                     echo "<option id=\"" . $item['locationname'] . "\">" . $item['locationname'] . "</option>";
-
                                 }
                                 ?>
                             </select>
@@ -361,7 +362,7 @@ if ($loggedIn == true) {
                             <select id="products_select_list" name="productsearch">
                                 <option disabled selected>Select Product</option>
                                 <?php
-
+                                // Receives all products from the previously selected location, and puts them in a selection input field.
                                 $sql = "SELECT DISTINCT * FROM locations_has_products JOIN products ON products_productID=productID JOIN locations ON locations_locationID=locationID WHERE locationname=?";
                                 $run = $connection->prepare($sql);
                                 $run->execute([$sanitized_GET['location']]);

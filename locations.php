@@ -1,13 +1,16 @@
 <?php
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
-$sanitized_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
 
+$sanitized_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_MAGIC_QUOTES);
 
 if ($loggedIn == true) {
     // User is logged in.
 } else {
+    // If user is not logged in, redirect to login page.
     header("Location: login.php?alert=no_access");
 }
 
@@ -47,6 +50,7 @@ if ($loggedIn == true) {
             <div class="topbar_container">ORDERS</div>
         </a>
         <?php
+        // Checks if user is logged in as administrator, and if so, adds the admin page to the navigation bar.
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
@@ -112,6 +116,7 @@ if ($loggedIn == true) {
                         <th width="35%">Adress</th>
                     </tr>
                     <?php
+                    // Gets all data from all locations and prints them to a table.
                     $sql = "SELECT DISTINCT * FROM locations";
                     $run = $connection->prepare($sql);
                     $run->execute();
@@ -129,15 +134,11 @@ if ($loggedIn == true) {
                 </table>
             </div>
         </div>
-
-
         <br>
         <br>
         <br>
         <br>
     </div>
-
-
 </div>
 </body>
 </html>

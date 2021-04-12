@@ -1,10 +1,11 @@
 <?php
-//error_reporting (10000);
-$loggedIn = false; // Needs to be before checkLoggedIn.php requires.
+// Main page
+
+// Needs to be set before checkLoggedIn.php gets required.
+$loggedIn = false;
+
 require "dependencies/php/pdo.php";
 require "dependencies/php/checkLoggedIn.php";
-
-
 ?>
 
 <html>
@@ -38,6 +39,7 @@ require "dependencies/php/checkLoggedIn.php";
             <div class="topbar_container">ORDERS</div>
         </a>
         <?php
+        // Checks if logged in user is an administrator and if so, adds a link to the admin page to the navigation bar
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
             $run = $connection->prepare($sql);
@@ -71,6 +73,7 @@ require "dependencies/php/checkLoggedIn.php";
         </div>
 
         <?php
+        // Shows some account information from the currently logged-in user.
         if ($loggedIn == true) {
             echo "<div class=\"home_personal_details\">";
             echo "<b style='font-size: 200%;'>Welkom " . $_SESSION['username'] . "</b><br>";
