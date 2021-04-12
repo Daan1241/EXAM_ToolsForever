@@ -27,6 +27,10 @@ a:hover {
     color: red;
 }
 
+.message {
+    color: green;
+}
+
 th, tr, td {
     border: 0px solid black;
     text-align: left;

@@ -31,6 +31,9 @@ require "dependencies/php/checkLoggedIn.php";
         <a href="locations.php">
             <div class="topbar_container">LOCATIONS</div>
         </a>
+        <a href="orders.php">
+            <div class="topbar_container">ORDERS</div>
+        </a>
         <?php
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
@@ -79,34 +82,6 @@ require "dependencies/php/checkLoggedIn.php";
         </form>
         <br>
         <b class="password_forgotten">Forgot password?</b><br>
-
-        <br><br><br><br>
-        Or, create a new account
-        <form method="POST" action="dependencies/php/createaccount.php" class="login_form">
-            <table>
-                <tr>
-                    <td>E-mail:</td>
-                    <td><input type="email" name="email" id="CA_email" class="input_field" required></td>
-                </tr>
-                <tr>
-                    <td>Username:</td>
-                    <td><input type="text" name="username" id="CA_username" class="input_field" required></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" name="password" id="CA_password" class="input_field" required></td>
-                </tr>
-                <tr>
-                    <td>Repeat password:</td>
-                    <td><input type="password" name="password_repeat" id="CA_password_repeat"
-                               onfocusout="checkPassword();"
-                               class="input_field" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><br><input type="submit" value="Log-in" class="input_submit"></td>
-                </tr>
-            </table>
-        </form>
         <p class="alert" id="alert"></p>
     </div>
 

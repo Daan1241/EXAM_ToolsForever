@@ -43,6 +43,9 @@ if ($loggedIn == true) {
         <a href="locations.php">
             <div class="topbar_container">LOCATIONS</div>
         </a>
+        <a href="orders.php">
+            <div class="topbar_container">ORDERS</div>
+        </a>
         <?php
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
@@ -243,7 +246,11 @@ if ($loggedIn == true) {
                             echo "<td onclick='modify(this)'>" . $product['producttype'] . "</td>";
                             echo "<td onclick='modify(this)'>€" . $product['buyprice'] . "</td>";
                             echo "<td onclick='modify(this)'>€" . $product['sellprice'] . "</td>";
-                            echo "<td onclick='modify(this)'>" . $product['stock'] . "</td>";
+                            if($product['stock'] < $product['min_stock']){
+                                echo "<td onclick='modify(this)' style='color: red'>" . $product['stock'] . "</td>";
+                            } else {
+                                echo "<td onclick='modify(this)'>" . $product['stock'] . "</td>";
+                            }
                             echo "<td onclick='modify(this)'>" . $product['min_stock'] . "</td>";
                             echo "<td>€" . $product['stock'] * $product['sellprice'] . "</td>";
                             echo "</tr>";
@@ -260,9 +267,72 @@ if ($loggedIn == true) {
 
         </div>
 
+        <!-- low stock products -->
+        <div class="management_details_container"><span id="searchproducts"></span>
+            <b style="font-size: 200%;">Products low on stock</b><br><br>
+            <div class="management_existing_products" id="products_container">
+                <?php
+                $sql = "SELECT DISTINCT * FROM locations";
+                $run = $connection->prepare($sql);
+                $run->execute();
+                $result_locations = $run->fetchAll();
+
+                foreach ($result_locations as $locationinfo) {
+
+                    $sql = "SELECT DISTINCT * FROM locations_has_products JOIN products ON products_productID=productID JOIN locations ON locations_locationID=locationID WHERE locationname = ? AND stock<min_stock";
+                    $run = $connection->prepare($sql);
+                    $run->execute([$locationinfo['locationname']]);
+                    $result_stock = $run->fetchAll();
+//                    print("<pre>".print_r($result_stock,true)."</pre>");
+
+                    if (isset($result_stock[0])) {
+                        echo "<table>";
+                        echo "<tr>";
+                        echo "<th style='width: 8%'>" . $locationinfo['locationname'] . "</th>";
+                        echo "<th style='width: 8%; display: none'>ID</th>";
+                        echo "<th style='width: 8%'>Name</th>";
+                        echo "<th style='width: 8%'>Brand</th>";
+                        echo "<th style='width: 8%'>Type</th>";
+                        echo "<th style='width: 8%'>Buy Price</th>";
+                        echo "<th style='width: 8%'>Sell Price</th>";
+                        echo "<th style='width: 8%'>Stock</th>";
+                        echo "<th style='width: 8%'>Min. stock</th>";
+                        echo "<th style='width: 8%'>Stock worth</th>";
+                        echo "</tr>";
+
+                        foreach ($result_stock as $index => $product) {
+                            echo "<tr>";
+                            echo "<td><input type=\"checkbox\" class='checkbox_product' id='" . $locationinfo['locationname'] . "_" . $product['ID'] . "'></td>";
+                            echo "<td style='display: none'>" . $product['ID'] . "</td>";
+                            echo "<td onclick='modify(this)'>" . $product['productname'] . "</td>";
+                            echo "<td onclick='modify(this)'>" . $product['productbrand'] . "</td>";
+                            echo "<td onclick='modify(this)'>" . $product['producttype'] . "</td>";
+                            echo "<td onclick='modify(this)'>€" . $product['buyprice'] . "</td>";
+                            echo "<td onclick='modify(this)'>€" . $product['sellprice'] . "</td>";
+                            if($product['stock'] < $product['min_stock']){
+                                echo "<td onclick='modify(this)' style='color: red'>" . $product['stock'] . "</td>";
+                            } else {
+                                echo "<td onclick='modify(this)'>" . $product['stock'] . "</td>";
+                            }
+                            echo "<td onclick='modify(this)'>" . $product['min_stock'] . "</td>";
+                            echo "<td>€" . $product['stock'] * $product['sellprice'] . "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</td></table><br><br>";
+                    }
+
+                }
+                ?>
+                </table>
+            </div>
+
+
+        </div>
+        <!-- end of low stock products -->
+
         <!-- search product -->
         <div class="management_details_container"><span id="searchproducts"></span>
-            <b style="font-size: 200%;">Search products: </b><br><br>
+            <b style="font-size: 200%;">Search products</b><br><br>
             <form action="" method="GET">
                 <table>
                     <tr>

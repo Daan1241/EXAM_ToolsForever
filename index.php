@@ -34,6 +34,9 @@ require "dependencies/php/checkLoggedIn.php";
         <a href="locations.php">
             <div class="topbar_container">LOCATIONS</div>
         </a>
+        <a href="orders.php">
+            <div class="topbar_container">ORDERS</div>
+        </a>
         <?php
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";

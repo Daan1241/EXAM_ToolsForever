@@ -43,6 +43,9 @@ if ($loggedIn == true) {
         <a href="locations.php">
             <div class="topbar_container"><b>LOCATIONS</b></div>
         </a>
+        <a href="orders.php">
+            <div class="topbar_container">ORDERS</div>
+        </a>
         <?php
         if (isset($sanitized)) {
             $sql = "SELECT privileges FROM users WHERE username=? AND sessionID=?";
@@ -107,7 +110,6 @@ if ($loggedIn == true) {
                         <th width="5%">Location</th>
                         <th width="10%">Zipcode</th>
                         <th width="35%">Adress</th>
-                        <th width="1%">Del.</th>
                     </tr>
                     <?php
                     $sql = "SELECT DISTINCT * FROM locations";
@@ -121,7 +123,6 @@ if ($loggedIn == true) {
                         echo "<td onclick='modify_location(this)'>" . $locationinfo['locationname'] . "</td>";
                         echo "<td onclick='modify_location(this)'>" . $locationinfo['zipcode_numbers'] . $locationinfo['zipcode_letters'] . "</td>";
                         echo "<td onclick='modify_location(this)'>" . $locationinfo['locationadress'] . "</td>";
-                        echo "<td><img src='dependencies/img/delete.svg' style=\"width: 100%\" onclick='deletelocation(".$locationinfo['locationID'].")'></td>";
                         echo "</tr>";
                     }
                     ?>
