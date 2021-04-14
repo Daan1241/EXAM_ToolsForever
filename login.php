@@ -44,22 +44,28 @@ require "dependencies/php/checkLoggedIn.php";
             $run->execute([$sanitized['username'], $sanitized['sessionID']]);
             $dbdata_privileges = $run->fetchAll();
 
-            if (strtolower($dbdata_privileges[0][0]) == 'admin') {
-                echo "<a href=\"admin.php\">
+            if (strtolower($dbdata_privileges[0][0]) == 'admin'):
+            ?>
+                <a href=\"admin.php\">
             <div class=\"topbar_container\">ADMIN</div>
-            </a>";
-            }
+            </a>
+            <?php 
+            endif;
         }
 
-        if ($loggedIn == true) {
-            echo "<a href=\"dependencies/php/logout.php\">
+        if ($loggedIn == true):
+        ?>
+            <a href=\"dependencies/php/logout.php\">
               <div class=\"topbar_container\">LOGOUT</div>
-              </a>";
-        } else {
-            echo "<a href=\"login.php\">
+              </a>
+        <?php
+        else:
+        ?>
+            <a href=\"login.php\">
               <div class=\"topbar_container\"><b>LOGIN</b></div>
-              </a>";
-        }
+              </a>
+        <?php
+        endif;
         ?>
     </div>
 </div>
